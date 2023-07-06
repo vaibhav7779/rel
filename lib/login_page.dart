@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test/phone.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -14,6 +15,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final passController = TextEditingController();
   bool passToggle = true;
   bool isLoading = false;
+  String cardSel = 'agent';
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +26,105 @@ class _LoginWidgetState extends State<LoginWidget> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Form(
             key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/images/avatar.png',
-                  height: 200,
-                  width: 200,
+                const Text(
+                  "Choose login type",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          cardSel = 'customer';
+                        });
+                      },
+                      child: Card(
+                        shape: cardSel == 'customer'
+                            ? new RoundedRectangleBorder(
+                                side: new BorderSide(
+                                    color: Colors.blue, width: 2.0),
+                                borderRadius: BorderRadius.circular(4.0))
+                            : new RoundedRectangleBorder(
+                                side: new BorderSide(
+                                    color: Colors.white, width: 2.0),
+                                borderRadius: BorderRadius.circular(4.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'images/customer.svg',
+                                height: 130,
+                                width: 130,
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                "Customer",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          cardSel = 'agent';
+                        });
+                      },
+                      child: Card(
+                        shape: cardSel == 'agent'
+                            ? new RoundedRectangleBorder(
+                                side: new BorderSide(
+                                    color: Colors.blue, width: 2.0),
+                                borderRadius: BorderRadius.circular(4.0))
+                            : new RoundedRectangleBorder(
+                                side: new BorderSide(
+                                    color: Colors.white, width: 2.0),
+                                borderRadius: BorderRadius.circular(4.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'images/agent.svg',
+                                height: 130,
+                                width: 130,
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                "Agent",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 24),
+                  ],
                 ),
                 const SizedBox(
                   height: 50,
@@ -123,7 +213,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     TextButton(
                       onPressed: () {},
                       child: const Text(
-                        'Unable to login?',
+                        'New User',
                         style: TextStyle(fontSize: 16),
                       ),
                     ),

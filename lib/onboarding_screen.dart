@@ -50,7 +50,7 @@ class OnboardingScreen extends StatelessWidget {
           size: Size(15, 15),
           //  color: Colors.blue,
           activeSize: Size.square(20),
-          //  activeColor: Colors.red,
+          activeColor: Color(0xFFf8a532),
         ),
         showDoneButton: true,
         done: const Text("Done", style: TextStyle(fontSize: 20)),
