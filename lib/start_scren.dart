@@ -23,14 +23,14 @@ class _StartScreenState extends State<StartScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Dashboard',
           style: TextStyle(fontSize: 27, color: colorstheme),
         ),
         centerTitle: true,
-        shadowColor: Colors.transparent,
+        //shadowColor: Colors.transparent,
         leading: Padding(
           padding: const EdgeInsets.only(left: 15.0),
           child: IconButton(

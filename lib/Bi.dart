@@ -1,21 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:test/success_page.dart';
+import 'package:datepicker_dropdown/datepicker_dropdown.dart';
 
 enum ContactType { Call, Visit }
 
 enum VehicleType { Yes, No }
 
-var itemsPersonContacted = ['Customer', 'Item 2', 'Item 3'];
-var itemsDisposition = ['Cannot pay', 'Item 2', 'Item 3'];
-var itemsselfDisposition = [
-  'Job loss/Drop in income/Business loss',
-  'Item 2',
-  'Item 3'
-];
+var itemsOccupation = ['Salaried', 'Business', 'Unemployed'];
+var itemsEducation = ['Graduate', 'Post Graduate', 'Masters', 'Doctorate'];
+var itemsAnnualIncome = ['< 100000', '500000', '>500000'];
 var itemsVehicle = ['Customer', 'Item 2', 'Item 3'];
+var itemsGender = ['Male', 'Female', 'Non-binary'];
 
 class Bi extends StatefulWidget {
   @override
@@ -51,12 +48,13 @@ class _BiState extends State<Bi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Record PTP/MOM'),
+        title: const Text('BI'),
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Color(0xFFf8a532),
+        // backgroundColor: Color(0xFFf8a532),
         actions: <Widget>[
           PopupMenuButton<int>(
             onSelected: (item) => {},
@@ -69,83 +67,70 @@ class _BiState extends State<Bi> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Form(
             key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text(
+                  "Customer demographics",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 24),
                 TextFormField(
                   obscureText: false,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                  ],
-                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    labelText: "Select HPA*",
+                    labelText: "Full Name",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Enter HPA";
+                      return "Filed cant be empty";
                     }
                   },
                 ),
-                const SizedBox(height: 24),
-                const Text(
-                  "Mode of contact",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    //color: Colors.indigoAccent,
-                  ),
+                const SizedBox(
+                  height: 24,
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile<ContactType>(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        value: ContactType.Call,
-                        groupValue: _contactType,
-                        title: const Text('Call'),
-                        tileColor: Color(0xFFe6e7e8),
-                        dense: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _contactType = value;
-                          });
-                        },
+                const Text(
+                  'Select DOB',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                DropdownDatePicker(
+                  inputDecoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    Expanded(
-                      child: RadioListTile<ContactType>(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        value: ContactType.Visit,
-                        groupValue: _contactType,
-                        title: const Text('Visit'),
-                        tileColor: Color(0xFFe6e7e8),
-                        dense: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _contactType = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))), // optional
+                  isDropdownHideUnderline: true, // optional
+                  isFormValidator: true, // optional
+                  startYear: 1900, // optional
+                  endYear: 2020, // optional
+                  selectedDay: 14, // optional
+                  selectedMonth: 10, // optional
+                  selectedYear: 1993, // optional
+                  onChangedDay: (value) => print('onChangedDay: $value'),
+                  onChangedMonth: (value) => print('onChangedMonth: $value'),
+                  onChangedYear: (value) => print('onChangedYear: $value'),
+                  //boxDecoration: BoxDecoration(
+                  // border: Border.all(color: Colors.grey, width: 1.0)), // optional
+                  // showDay: false,// optional
+                  // dayFlex: 2,// optional
+                  // locale: "zh_CN",// optional
+                  // hintDay: 'Day', // optional
+                  // hintMonth: 'Month', // optional
+                  // hintYear: 'Year', // optional
+                  // hintTextStyle: TextStyle(color: Colors.grey), // optional
                 ),
                 const SizedBox(height: 24),
                 DropdownButtonFormField(
-                  items: itemsPersonContacted.map((String items) {
+                  items: itemsOccupation.map((String items) {
                     return DropdownMenuItem(
                       value: items,
                       child: Text(items),
@@ -153,7 +138,7 @@ class _BiState extends State<Bi> {
                   }).toList(),
                   dropdownColor: Color(0xFFe6e7e8),
                   decoration: const InputDecoration(
-                    labelText: "Person Contacted",
+                    labelText: "Occupation",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) =>
@@ -162,7 +147,7 @@ class _BiState extends State<Bi> {
                 ),
                 const SizedBox(height: 24),
                 DropdownButtonFormField(
-                  items: itemsDisposition.map((String items) {
+                  items: itemsEducation.map((String items) {
                     return DropdownMenuItem(
                       value: items,
                       child: Text(items),
@@ -170,7 +155,7 @@ class _BiState extends State<Bi> {
                   }).toList(),
                   //dropdownColor: Colors.indigo.shade50,
                   decoration: const InputDecoration(
-                    labelText: "Disposition",
+                    labelText: "Education",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) =>
@@ -179,7 +164,7 @@ class _BiState extends State<Bi> {
                 ),
                 const SizedBox(height: 24),
                 DropdownButtonFormField(
-                  items: itemsselfDisposition.map((String items) {
+                  items: itemsAnnualIncome.map((String items) {
                     return DropdownMenuItem(
                       value: items,
                       child: Text(items),
@@ -187,7 +172,7 @@ class _BiState extends State<Bi> {
                   }).toList(),
                   //dropdownColor: Colors.indigo.shade50,
                   decoration: const InputDecoration(
-                    labelText: "Self-disposition",
+                    labelText: "Annual Income",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) =>
@@ -195,107 +180,16 @@ class _BiState extends State<Bi> {
                   onChanged: (value) {},
                 ),
                 const SizedBox(height: 24),
-                Card(
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    autofocus: false,
-                    textAlign: TextAlign.start,
-                    maxLines: 3, //or null
-                    decoration: const InputDecoration(
-                      labelText: "Add Comment*",
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        wordCount = value.length.toString();
-                      });
-                    },
-                    validator: (value) =>
-                        value == null ? 'Filed cant be empty' : null,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Text('150/$wordCount'),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    const Text("Request for supervison visit"),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                const Divider(),
-                const SizedBox(height: 24),
-                const Text(
-                  "Have you seen the vehicle?",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    // color: Colors.indigoAccent,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile<VehicleType>(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        value: VehicleType.Yes,
-                        groupValue: _vehicleType,
-                        title: const Text('Yes'),
-                        tileColor: Color(0xFFe6e7e8),
-                        dense: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _vehicleType = value;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    Expanded(
-                      child: RadioListTile<VehicleType>(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        value: VehicleType.No,
-                        groupValue: _vehicleType,
-                        title: const Text('No'),
-                        tileColor: Color(0xFFe6e7e8),
-                        dense: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _vehicleType = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
                 DropdownButtonFormField(
-                  items: itemsVehicle.map((String items) {
+                  items: itemsGender.map((String items) {
                     return DropdownMenuItem(
                       value: items,
                       child: Text(items),
                     );
                   }).toList(),
-                  // dropdownColor: Colors.indigo.shade50,
+                  //dropdownColor: Colors.indigo.shade50,
                   decoration: const InputDecoration(
-                    labelText: "Vehicle is with",
+                    labelText: "Gender",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) =>
@@ -303,50 +197,6 @@ class _BiState extends State<Bi> {
                   onChanged: (value) {},
                 ),
                 const SizedBox(height: 24),
-                Center(
-                  child: SizedBox(
-                    height: 200,
-                    width: double.infinity,
-                    child: Card(
-                      semanticContainer: true,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      shape: ContinuousRectangleBorder(
-                        side: BorderSide(
-                            width: 1, color: Theme.of(context).primaryColor),
-                      ),
-                      elevation: 20,
-                      child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 9,
-                            ),
-                            const Text("Vehicle image"),
-                            const Divider(),
-                            const SizedBox(height: 15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    pickImage();
-                                  },
-                                  child: const Icon(Icons.camera_alt_outlined),
-                                ),
-                                const SizedBox(width: 5),
-                                const Text("Add"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 40),
                 SizedBox(
                   width: double.infinity,
                   height: 50,

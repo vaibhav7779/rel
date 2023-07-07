@@ -21,7 +21,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Claims App"),
+        title: const Text("Lead App"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -44,7 +44,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   height: 24,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -66,8 +66,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                           padding: const EdgeInsets.all(4.0),
                           child: Column(
                             children: [
-                              SvgPicture.asset(
-                                'images/customer.svg',
+                              Image.asset(
+                                'assets/images/customer.png',
                                 height: 130,
                                 width: 130,
                               ),
@@ -105,8 +105,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                           padding: const EdgeInsets.all(4.0),
                           child: Column(
                             children: [
-                              SvgPicture.asset(
-                                'images/agent.svg',
+                              Image.asset(
+                                'assets/images/agent.png',
                                 height: 130,
                                 width: 130,
                               ),
@@ -123,7 +123,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 24),
                   ],
                 ),
                 const SizedBox(
@@ -202,7 +201,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           )
                         : const CircularProgressIndicator(
-                            color: Color(0xFFfef101),
+                            color: Color(0xFFf8a532),
                           ),
                   ),
                 ),

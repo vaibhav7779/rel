@@ -133,7 +133,7 @@ class _MyVerifyState extends State<MyVerify> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16))
                         : const CircularProgressIndicator(
-                            color: Color(0xFFfef101),
+                            color: Color(0xFFf8a532),
                           ),
                   ),
                 ),

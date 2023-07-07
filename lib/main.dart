@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 // import 'package:test/onboarding_screen.dart';
 import 'package:test/palette.dart';
 // import 'package:test/phone.dart';
-import 'package:test/start_scren.dart';
-// import 'package:test/login_page.dart';
+// import 'package:test/start_scren.dart';
+import 'package:test/login_page.dart';
+// import 'package:test/success_page.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -23,6 +24,6 @@ void main() => runApp(
         //   nextScreen: OnboardingScreen(),
         //   // nextScreen: MyPhone(),
         // ),
-        home: StartScreen(),
+        home: LoginWidget(),
       ),
     );

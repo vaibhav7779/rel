@@ -40,6 +40,9 @@ dependencies:
   introduction_screen: ^3.1.8
   image_picker: ^0.8.9
   pinput: ^2.2.12
+  datepicker_dropdown: ^0.0.7+5
+  percent_indicator: ^4.2.3
+  syncfusion_flutter_pdfviewer: ^20.3.61-beta
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +77,9 @@ flutter:
       - assets/lotty.json
       - assets/mahindra.json
       - assets/images/twofactor.svg
+      - assets/dummy.pdf
+      - assets/images/agent.png
+      - assets/images/customer.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
